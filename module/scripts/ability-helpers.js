@@ -5,6 +5,7 @@ export default class AbilityHelper {
 		const existed = this.CheckAbilityExists(actor, abilitytype, abilitynamn);
 
 		if (existed) {
+			actor.items.find(i => i.name == abilitynamn).system.isvisible = true;
 			return;
 		}
 

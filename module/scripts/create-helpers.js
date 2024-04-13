@@ -2,18 +2,13 @@ import AbilityHelper from "./ability-helpers.js";
 import BonusHelper from "./bonus-helpers.js";
 
 export default class CreateHelper {
-    
-    static async SetMortalAbilities(actorCopy, actor, era) {
+
+	// #region Abilities
+	static async SetMortalAbilities(actorCopy, actor, era) {
 		console.log(`WoD | Set Mortal Abilities - ${era}`);
 
 		// hide all
-		for (const ability in actorCopy.system.abilities) {
-			if (actorCopy.system.abilities[ability] != undefined) {
-				if (actorCopy.system.abilities[ability].value == 0) {
-					actorCopy.system.abilities[ability].isvisible = false;
-				}
-			}
-		}
+		CreateHelper.HideEmptyAbilities(actorCopy);
 
 		for (const talent in game.worldofdarkness.abilities.mortal[era].talents) {
 			if (actorCopy.system.abilities[game.worldofdarkness.abilities.mortal[era].talents[talent]] != undefined) {
@@ -46,19 +41,13 @@ export default class CreateHelper {
 			await AbilityHelper.CreateAbility(actor, "wod.types.knowledgesecondability", game.i18n.localize("wod.abilities.seneschal"), parseInt(actor.system.settings.abilities.defaultmaxvalue));
 			await AbilityHelper.CreateAbility(actor, "wod.types.knowledgesecondability", game.i18n.localize("wod.abilities.theology"), parseInt(actor.system.settings.abilities.defaultmaxvalue));
 		}
-	}	
+	}
 
-	static async SetVampireAbilities(actorCopy, actor, era) {	
+	static async SetVampireAbilities(actorCopy, actor, era) {
 		console.log(`WoD | Set Vampire Abilities - ${era}`);
 
 		// hide all
-		for (const ability in actorCopy.system.abilities) {
-			if (actorCopy.system.abilities[ability] != undefined) {
-				if (actorCopy.system.abilities[ability].value == 0) {
-					actorCopy.system.abilities[ability].isvisible = false;
-				}
-			}
-		}
+		CreateHelper.HideEmptyAbilities(actorCopy);
 
 		for (const talent in game.worldofdarkness.abilities.vampire[era].talents) {
 			if (actorCopy.system.abilities[game.worldofdarkness.abilities.vampire[era].talents[talent]] != undefined) {
@@ -93,17 +82,11 @@ export default class CreateHelper {
 		}
 	}
 
-	static async SetMageAbilities(actorCopy, actor, era) {	
+	static async SetMageAbilities(actorCopy, actor, era) {
 		console.log(`WoD | Set Mage Abilities - ${era}`);
 
 		// hide all
-		for (const ability in actorCopy.system.abilities) {
-			if (actorCopy.system.abilities[ability] != undefined) {
-				if (actorCopy.system.abilities[ability].value == 0) {
-					actorCopy.system.abilities[ability].isvisible = false;
-				}
-			}
-		}
+		CreateHelper.HideEmptyAbilities(actorCopy);
 
 		for (const talent in game.worldofdarkness.abilities.mage[era].talents) {
 			if (actorCopy.system.abilities[game.worldofdarkness.abilities.mage[era].talents[talent]] != undefined) {
@@ -135,17 +118,11 @@ export default class CreateHelper {
 		}
 	}
 
-	static async SetWerewolfAbilities(actorCopy, actor, era) {	
+	static async SetWerewolfAbilities(actorCopy, actor, era) {
 		console.log(`WoD | Set Werewolf Abilities - ${era}`);
 
 		// hide all
-		for (const ability in actorCopy.system.abilities) {
-			if (actorCopy.system.abilities[ability] != undefined) {
-				if (actorCopy.system.abilities[ability].value == 0) {
-					actorCopy.system.abilities[ability].isvisible = false;
-				}
-			}
-		}
+		CreateHelper.HideEmptyAbilities(actorCopy);
 
 		for (const talent in game.worldofdarkness.abilities.werewolf[era].talents) {
 			var ability = game.worldofdarkness.abilities.werewolf[era].talents[talent];
@@ -182,13 +159,7 @@ export default class CreateHelper {
 		console.log(`WoD | Set ${type} Abilities - ${era}`);
 
 		// hide all
-		for (const ability in actorCopy.system.abilities) {
-			if (actorCopy.system.abilities[ability] != undefined) {
-				if (actorCopy.system.abilities[ability].value == 0) {
-					actorCopy.system.abilities[ability].isvisible = false;
-				}
-			}
-		}
+		CreateHelper.HideEmptyAbilities(actorCopy);
 
 		for (const talent in game.worldofdarkness.abilities[type][era].talents) {
 			if (actorCopy.system.abilities[game.worldofdarkness.abilities[type][era].talents[talent]] != undefined) {
@@ -226,13 +197,13 @@ export default class CreateHelper {
 						actorCopy.system.abilities[game.worldofdarkness.abilities[type]["modern20"].talents[talent]].isvisible = true;
 					}
 				}
-		
+
 				for (const skill in game.worldofdarkness.abilities[type]["modern20"].skills) {
 					if (actorCopy.system.abilities[game.worldofdarkness.abilities[type]["modern20"].skills[skill]] != undefined) {
 						actorCopy.system.abilities[game.worldofdarkness.abilities[type]["modern20"].skills[skill]].isvisible = true;
 					}
 				}
-		
+
 				for (const knowledge in game.worldofdarkness.abilities[type]["modern20"].knowledges) {
 					if (actorCopy.system.abilities[game.worldofdarkness.abilities[type]["modern20"].knowledges[knowledge]] != undefined) {
 						actorCopy.system.abilities[game.worldofdarkness.abilities[type]["modern20"].knowledges[knowledge]].isvisible = true;
@@ -258,9 +229,11 @@ export default class CreateHelper {
 					actor.system.abilities[ability].isvisible = false;
 				}
 			}
-		}	
+		}
 	}
-	
+	// #endregion
+
+	// #region Attributes
 	static async SetMortalAttributes(actor) {
 		console.log('WoD | Set Mortal Attributes');
 
@@ -280,14 +253,14 @@ export default class CreateHelper {
 			actor.system.attributes.perception.isvisible = false;
 			actor.system.advantages.willpower.permanent = 2;
 		}
-	
+
 		if (CONFIG.worldofdarkness.rollSettings) {
-			willpower = actor.system.advantages.willpower.permanent; 
+			willpower = actor.system.advantages.willpower.permanent;
 		}
 		else {
-			willpower = actor.system.advantages.willpower.permanent > actor.system.advantages.willpower.temporary ? actor.system.advantages.willpower.temporary : actor.system.advantages.willpower.permanent; 
+			willpower = actor.system.advantages.willpower.permanent > actor.system.advantages.willpower.temporary ? actor.system.advantages.willpower.temporary : actor.system.advantages.willpower.permanent;
 		}
-	
+
 		actor.system.advantages.willpower.roll = willpower;
 
 		actor.system.settings.soak.bashing.isrollable = true;
@@ -305,7 +278,7 @@ export default class CreateHelper {
 		actor.system.settings.soak.aggravated.isrollable = false;
 
 		actor.system.settings.haspath = true;
-		actor.system.settings.hasbloodpool = true;		
+		actor.system.settings.hasbloodpool = true;
 		actor.system.settings.hasvirtue = true;
 
 		actor.system.settings.powers.hasdisciplines = true;
@@ -358,7 +331,7 @@ export default class CreateHelper {
 		actor.system.settings.soak.chimerical.bashing.isrollable = true;
 		actor.system.settings.soak.chimerical.lethal.isrollable = true;
 		actor.system.settings.soak.chimerical.aggravated.isrollable = false;
-		
+
 		actor.system.settings.hasglamour = true;
 		actor.system.settings.hasbanality = true;
 
@@ -384,7 +357,7 @@ export default class CreateHelper {
 		actor.system.settings.hasvirtue = true;
 		actor.system.settings.hasfaith = true;
 		actor.system.settings.hastorment = true;
-		
+
 		actor.system.settings.powers.haslores = true;
 
 		actor.system.advantages.virtues.selfcontrol.label = "wod.advantages.virtue.conviction";
@@ -416,7 +389,9 @@ export default class CreateHelper {
 		actor.system.settings.soak.lethal.isrollable = true;
 		actor.system.settings.soak.aggravated.isrollable = true;
 	}
+	// #endregion
 
+	// #region Variants
 	static async SetChangingVariant(actorData, variant) {
 		actorData.system.settings.variant = variant;
 
@@ -436,7 +411,7 @@ export default class CreateHelper {
 		actorData.system.settings.haswillpower = true;
 
 		actorData.system.settings.hasrage = false;
-		actorData.system.settings.hasgnosis = false;						
+		actorData.system.settings.hasgnosis = false;
 		actorData.system.settings.haspath = false;
 		actorData.system.settings.hasbloodpool = false;
 		actorData.system.settings.hasvirtue = false;
@@ -477,21 +452,21 @@ export default class CreateHelper {
 				actorData.system.settings.powers.hasgifts = true;
 			}
 			if (variant == 'truefaith') {
-				actorData.system.settings.hasfaith = true;	
-				actorData.system.settings.powers.haspowers = true;			
+				actorData.system.settings.hasfaith = true;
+				actorData.system.settings.powers.haspowers = true;
 			}
 		}
-	}	
+	}
 
 	static async SetCreatureVariant(actorData, variant) {
 		actorData.system.settings.variant = variant;
 
 		actorData.system.settings.haswillpower = true;
 		actorData.system.settings.soak.bashing.isrollable = true;
-		actorData.system.settings.powers.haspowers = true;	
-		
+		actorData.system.settings.powers.haspowers = true;
+
 		actorData.system.settings.hasrage = false;
-		actorData.system.settings.hasgnosis = false;						
+		actorData.system.settings.hasgnosis = false;
 		actorData.system.settings.haspath = false;
 		actorData.system.settings.hasbloodpool = false;
 		actorData.system.settings.hasvirtue = false;
@@ -509,12 +484,12 @@ export default class CreateHelper {
 		actorData.system.settings.powers.hasedges = false;
 		actorData.system.settings.powers.haslores = false;
 		actorData.system.settings.powers.hascharms = false;
-			
+
 
 		if (actorData.type == CONFIG.worldofdarkness.sheettype.creature) {
 
 			if (variant == 'general') {
-				
+
 			}
 			if (variant == 'chimera') {
 				actorData.system.settings.hasglamour = true;
@@ -532,7 +507,7 @@ export default class CreateHelper {
 			}
 			if (variant == 'spirit') {
 				actorData.system.settings.hasrage = true;
-				actorData.system.settings.hasgnosis = true;	
+				actorData.system.settings.hasgnosis = true;
 				actorData.system.settings.hasessence = true;
 				actorData.system.settings.powers.hasgifts = true;
 				actorData.system.settings.powers.hascharms = true;
@@ -546,26 +521,26 @@ export default class CreateHelper {
 			}
 			if (variant == 'anurana') {
 				actorData.system.settings.hasrage = true;
-				actorData.system.settings.hasgnosis = true;	
+				actorData.system.settings.hasgnosis = true;
 				actorData.system.settings.soak.lethal.isrollable = true;
 				actorData.system.settings.soak.aggravated.isrollable = true;
 			}
 			if (variant == 'samsa') {
 				actorData.system.settings.hasrage = true;
-				actorData.system.settings.hasgnosis = true;	
+				actorData.system.settings.hasgnosis = true;
 				actorData.system.settings.powers.hasgifts = true;
 				actorData.system.settings.soak.lethal.isrollable = true;
 				actorData.system.settings.soak.aggravated.isrollable = true;
 			}
 			if (variant == 'kerasi') {
 				actorData.system.settings.hasrage = true;
-				actorData.system.settings.hasgnosis = true;	
+				actorData.system.settings.hasgnosis = true;
 				actorData.system.settings.soak.lethal.isrollable = true;
 				actorData.system.settings.soak.aggravated.isrollable = true;
 			}
 			if (variant == 'yeren') {
 				actorData.system.settings.hasrage = true;
-				actorData.system.settings.hasgnosis = true;	
+				actorData.system.settings.hasgnosis = true;
 				actorData.system.settings.powers.hasgifts = true;
 				actorData.system.settings.soak.lethal.isrollable = true;
 				actorData.system.settings.soak.aggravated.isrollable = true;
@@ -780,4 +755,29 @@ export default class CreateHelper {
 			await actor.createEmbeddedDocuments("Item", [itemData]);
 		}
 	}
+	// #endregion
+
+	// #region Helper methods	
+	static async HideEmptyAbilities(actorCopy) {
+		const secondaryAbilityTypes = [ "wod.types.knowledgesecondability", "wod.types.skillsecondability", "wod.types.talentsecondability"];
+
+		//primary abilities
+		for (const ability in actorCopy.system.abilities) {
+			if (actorCopy.system.abilities[ability] != undefined) {
+				if (actorCopy.system.abilities[ability].value == 0) {
+					actorCopy.system.abilities[ability].isvisible = false;
+				}
+			}
+		}
+
+		//secondary abilities
+		for (const ability of actorCopy.items.filter((x) => x.type == "Trait" && secondaryAbilityTypes.includes(x.system.type))) {
+			if (ability != undefined) {
+				if (ability.system.value == 0) {
+					ability.system.isvisible = false;
+				}
+			}
+		}
+	}
+	// #endregion
 }

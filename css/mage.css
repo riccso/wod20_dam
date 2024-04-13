@@ -15,7 +15,13 @@
   --main-wod-banner: var(--mage-banner-background);
   --main-wod-banner-small: var(--mage-banner-small-background);
 }
+
 .mage .victorian {
+  --main-wod-banner: var(--mage-banner-background);
+  --main-wod-banner-small: var(--mage-banner-small-background);
+}
+
+.mage .darkages {
   --main-wod-banner: var(--mage-banner-background);
   --main-wod-banner-small: var(--mage-banner-small-background);
 }

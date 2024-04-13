@@ -123,8 +123,15 @@ export default class CreateHelper {
 			}
 		}
 
-		actorCopy.system.abilities.technology.type = "skill";
-		actorCopy.system.abilities.research.type = "skill";
+		if (era == "darkages") {
+			await AbilityHelper.CreateAbility(actor, "wod.types.talentsecondability", game.i18n.localize("wod.abilities.legerdemain"), parseInt(actor.system.settings.abilities.defaultmaxvalue));
+			await AbilityHelper.CreateAbility(actor, "wod.types.skillsecondability", game.i18n.localize("wod.abilities.archery"), parseInt(actor.system.settings.abilities.defaultmaxvalue), false, true);
+			await AbilityHelper.CreateAbility(actor, "wod.types.skillsecondability", game.i18n.localize("wod.abilities.commerce"), parseInt(actor.system.settings.abilities.defaultmaxvalue));
+			await AbilityHelper.CreateAbility(actor, "wod.types.skillsecondability", game.i18n.localize("wod.abilities.ride"), parseInt(actor.system.settings.abilities.defaultmaxvalue));
+			await AbilityHelper.CreateAbility(actor, "wod.types.knowledgesecondability", game.i18n.localize("wod.abilities.hearthwisdom"), parseInt(actor.system.settings.abilities.defaultmaxvalue));
+			await AbilityHelper.CreateAbility(actor, "wod.types.knowledgesecondability", game.i18n.localize("wod.abilities.seneschal"), parseInt(actor.system.settings.abilities.defaultmaxvalue));
+			await AbilityHelper.CreateAbility(actor, "wod.types.knowledgesecondability", game.i18n.localize("wod.abilities.theology"), parseInt(actor.system.settings.abilities.defaultmaxvalue));
+		}
 	}
 
 	static async SetWerewolfAbilities(actorCopy, actor, era) {	

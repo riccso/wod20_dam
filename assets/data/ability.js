@@ -298,6 +298,39 @@ export const dataability = {
 				"politics",
 				"science"
             ]
+        },
+        "darkages": {
+            "talents": [
+                "alertness",
+                "athletics", 
+                "awareness",
+                "brawl",
+                "empathy",
+                "expression",
+                "intimidation",
+                "leadership",
+                "subterfuge"
+            ],
+            "skills": [
+                "animalken",
+                "craft",
+                "etiquette",
+                "melee",
+                "performance",
+                "stealth",
+                "survival"
+            ],
+            "knowledges": [
+                "academics",
+                "cosmology",
+                "enigmas",
+                "investigation",
+                "law",
+                "linguistics",
+                "medicine",
+                "occult",
+                "politics"
+            ]
         }
     },
     "werewolf": {

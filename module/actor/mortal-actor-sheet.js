@@ -281,6 +281,11 @@ export class MortalActorSheet extends ActorSheet {
 			await CreateHelper.SetVampireAbilities(actorData, this.actor, "darkages");
 		}
 
+		if (dataset.type == CONFIG.worldofdarkness.sheettype.mage) {
+			found = true;
+			await CreateHelper.SetMageAbilities(actorData, this.actor, "darkages");
+		}
+		
 		if (dataset.type == CONFIG.worldofdarkness.sheettype.werewolf) {
 			found = true;
 			await CreateHelper.SetWerewolfAbilities(actorData, this.actor, "darkages");

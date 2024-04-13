@@ -169,7 +169,8 @@ export const systemSettings = function() {
 		type: String,
         choices: {
 			"modern": game.i18n.localize('wod.era.modern'),
-			"victorian": game.i18n.localize('wod.era.victorian')
+			"victorian": game.i18n.localize('wod.era.victorian'),
+            "darkages": game.i18n.localize('wod.era.darkages')
 		}
 	});
 

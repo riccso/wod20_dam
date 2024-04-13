@@ -338,7 +338,7 @@ export class MortalActorSheet extends ActorSheet {
 
 		if (dataset.type == CONFIG.worldofdarkness.sheettype.mage) {
 			found = true;
-			await CreateHelper.SetMageAbilities(actorData, "victorian");
+			await CreateHelper.SetMageAbilities(actorData, this.actor, "victorian");
 		}
 
 		if (dataset.type == CONFIG.worldofdarkness.sheettype.mortal) {
@@ -396,7 +396,7 @@ export class MortalActorSheet extends ActorSheet {
 
 		if (dataset.type == CONFIG.worldofdarkness.sheettype.mage) {
 			found = true;
-			await CreateHelper.SetMageAbilities(actorData, "modern");
+			await CreateHelper.SetMageAbilities(actorData, this.actor, "modern");
 		}
 
 		if (dataset.type == CONFIG.worldofdarkness.sheettype.mortal) {

@@ -28,7 +28,7 @@ export class MageActorSheet extends MortalActorSheet {
 				actorData.system.settings.era = CONFIG.worldofdarkness.era[CONFIG.worldofdarkness.defaultMageEra];
 				actorData.system.settings.variant = "general";
 				
-				await CreateHelper.SetMageAbilities(actorData, CONFIG.worldofdarkness.defaultMageEra);
+				await CreateHelper.SetMageAbilities(actorData, this.actor, CONFIG.worldofdarkness.defaultMageEra);
 				await CreateHelper.SetMortalAttributes(actorData);
 				await CreateHelper.SetMageAttributes(actorData);
 				

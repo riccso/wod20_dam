@@ -7,7 +7,7 @@ export class ChangelingActorSheet extends MortalActorSheet {
 	
 	/** @override */
 	static get defaultOptions() {
-		return mergeObject(super.defaultOptions, {
+		return foundry.utils.mergeObject(super.defaultOptions, {
 			classes: ["wod20 wod-sheet changeling"],
 			template: "systems/worldofdarkness/templates/actor/changeling-sheet.html"
 		});
@@ -19,7 +19,7 @@ export class ChangelingActorSheet extends MortalActorSheet {
 
 	/** @override */
 	async getData() {
-		const actorData = duplicate(this.actor);
+		const actorData = foundry.utils.duplicate(this.actor);
 
 		if (!actorData.system.settings.iscreated) {
 			if (actorData.type == CONFIG.worldofdarkness.sheettype.changeling) {
@@ -33,9 +33,8 @@ export class ChangelingActorSheet extends MortalActorSheet {
 				
 				let itemData = {
 					name: "actor",
-					type: "Trait",
-					
-					data: {
+					type: "Trait",					
+					system: {
 						iscreated: true,
 						version: version,
 						label: "wod.realms.actor",
@@ -47,7 +46,7 @@ export class ChangelingActorSheet extends MortalActorSheet {
 				itemData = {
 					name: "fae",
 					type: "Trait",
-					data: {
+					system: {
 						iscreated: true,
 						version: version,
 						label: "wod.realms.fae",
@@ -59,7 +58,7 @@ export class ChangelingActorSheet extends MortalActorSheet {
 				itemData = {
 					name: "nature",
 					type: "Trait",
-					data: {
+					system: {
 						iscreated: true,
 						version: version,
 						label: "wod.realms.nature",
@@ -71,7 +70,7 @@ export class ChangelingActorSheet extends MortalActorSheet {
 				itemData = {
 					name: "prop",
 					type: "Trait",
-					data: {
+					system: {
 						iscreated: true,
 						version: version,
 						label: "wod.realms.prop",
@@ -83,7 +82,7 @@ export class ChangelingActorSheet extends MortalActorSheet {
 				itemData = {
 					name: "scene",
 					type: "Trait",
-					data: {
+					system: {
 						iscreated: true,
 						version: version,
 						label: "wod.realms.scene",
@@ -95,7 +94,7 @@ export class ChangelingActorSheet extends MortalActorSheet {
 				itemData = {
 					name: "time",
 					type: "Trait",
-					data: {
+					system: {
 						iscreated: true,
 						version: version,
 						label: "wod.realms.time",
@@ -228,7 +227,7 @@ export class ChangelingActorSheet extends MortalActorSheet {
 		}
 
 		const abilityType = dataset.switchtype;
-		const actorData = duplicate(this.actor);
+		const actorData = foundry.utils.duplicate(this.actor);
 		const source = dataset.source;
 
 		if (source == "soak") {
@@ -266,7 +265,7 @@ export class ChangelingActorSheet extends MortalActorSheet {
 
 			const itemid = parent[0].dataset.itemid;
 			let item = await this.actor.getEmbeddedDocument("Item", itemid);
-			const itemData = duplicate(item);
+			const itemData = foundry.utils.duplicate(item);
 
 			if ((index == 0) && (itemData.system.value == 1)) {
 				itemData.system.value = 0;
@@ -331,7 +330,7 @@ export class ChangelingActorSheet extends MortalActorSheet {
 			return;
 		}
 		
-		const actorData = duplicate(this.actor);
+		const actorData = foundry.utils.duplicate(this.actor);
 
 		if (oldState == "") {
 			actorData.system.health.damage.chimerical.bashing = parseInt(actorData.system.health.damage.chimerical.bashing) + 1;
@@ -380,7 +379,7 @@ export class ChangelingActorSheet extends MortalActorSheet {
 			return;
 		}
 
-		const actorData = duplicate(this.actor);
+		const actorData = foundry.utils.duplicate(this.actor);
 
 		if (oldState == "") {
 			return
@@ -417,7 +416,7 @@ export class ChangelingActorSheet extends MortalActorSheet {
 
 		index += 1
 
-		const actorData = duplicate(this.actor);
+		const actorData = foundry.utils.duplicate(this.actor);
 
 		if ((index == 1) && (actorData.system.advantages.willpower.imbalance == 1)) {
 			actorData.system.advantages.willpower.imbalance = 0;
@@ -438,7 +437,7 @@ export class ChangelingActorSheet extends MortalActorSheet {
 	async _assignToChangeling(fields, value) {
 		console.log("WoD | Changeling Sheet _assignToChangeling");
 		
-		const actorData = duplicate(this.actor);
+		const actorData = foundry.utils.duplicate(this.actor);
 
 		if (fields[2] === "glamour") {
 			if (fields[3] === "temporary") {

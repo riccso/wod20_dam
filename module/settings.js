@@ -481,6 +481,15 @@ export const systemSettings = function() {
 		type: Boolean,
 	});
 
+    game.settings.register("worldofdarkness", "patch400", {
+		name: "patch400",
+		hint: "patch400",
+		scope: "world",
+		config: false,
+		default: false,
+		type: Boolean,
+	});
+
     /* Groups of settings */
     game.settings.registerMenu("worldofdarkness", "ruleSettings", {
         name: game.i18n.localize('wod.settings.rulesettings'),
@@ -558,7 +567,7 @@ export const systemSettings = function() {
 export class Rules extends FormApplication {
     /** @override */
     static get defaultOptions() {
-        return mergeObject(super.defaultOptions, {
+        return foundry.utils.mergeObject(super.defaultOptions, {
             id: "rules",
             classes: ["wod20rule-dialog"],
             title: game.i18n.localize('wod.settings.rulesettings'),
@@ -582,7 +591,7 @@ export class Rules extends FormApplication {
                 // Exclude settings the user cannot change
                 if ((s.key == "advantageRolls") || (s.key == "attributeSettings")) {
                     // Update setting data
-                    const setting = duplicate(s);
+                    const setting = foundry.utils.duplicate(s);
 
                     setting.name = game.i18n.localize(setting.name);
                     setting.hint = game.i18n.localize(setting.hint);
@@ -640,7 +649,7 @@ export class Rules extends FormApplication {
 export class Dices extends FormApplication {
     /** @override */
     static get defaultOptions() {
-        return mergeObject(super.defaultOptions, {
+        return foundry.utils.mergeObject(super.defaultOptions, {
             id: "dices",
             classes: ["wod20rule-dialog"],
             title: game.i18n.localize("wod.settings.rollsettings"),
@@ -664,7 +673,7 @@ export class Dices extends FormApplication {
                 // Exclude settings the user cannot change
                 if ((s.key == "theRollofOne") || (s.key == "useOnesDamage") || (s.key == "useOnesSoak") || (s.key == "lowestDifficulty") || (s.key == "specialityAddSuccess") || (s.key == "specialityReduceDiff") || (s.key == "tenAddSuccess") || (s.key == "explodingDice"))  {
                     // Update setting data
-                    const setting = duplicate(s);
+                    const setting = foundry.utils.duplicate(s);
 
                     setting.name = game.i18n.localize(setting.name);
                     setting.hint = game.i18n.localize(setting.hint);
@@ -722,7 +731,7 @@ export class Dices extends FormApplication {
 export class Era extends FormApplication {
     /** @override */
     static get defaultOptions() {
-        return mergeObject(super.defaultOptions, {
+        return foundry.utils.mergeObject(super.defaultOptions, {
             id: "dices",
             classes: ["wod20rule-dialog"],
             title: game.i18n.localize("wod.settings.erasettings"),
@@ -746,7 +755,7 @@ export class Era extends FormApplication {
                 // Exclude settings the user cannot change
                 if ((s.key == "eraMortal") || (s.key == "eraMage") || (s.key == "eraVampire") || (s.key == "eraWerewolf"))  {
                     // Update setting data
-                    const setting = duplicate(s);
+                    const setting = foundry.utils.duplicate(s);
 
                     setting.name = game.i18n.localize(setting.name);
                     setting.hint = game.i18n.localize(setting.hint);
@@ -804,7 +813,7 @@ export class Era extends FormApplication {
 export class Demon extends FormApplication {
     /** @override */
     static get defaultOptions() {
-        return mergeObject(super.defaultOptions, {
+        return foundry.utils.mergeObject(super.defaultOptions, {
             id: "demon",
             classes: ["wod20rule-dialog"],
             title: game.i18n.localize("wod.settings.demonsettings"),
@@ -828,7 +837,7 @@ export class Demon extends FormApplication {
                 // Exclude settings the user cannot change
                 if ((s.key == "demonSystemSettings") || (s.key == "demonCreateForms")) {
                     // Update setting data
-                    const setting = duplicate(s);
+                    const setting = foundry.utils.duplicate(s);
 
                     setting.name = game.i18n.localize(setting.name);
                     setting.hint = game.i18n.localize(setting.hint);
@@ -887,7 +896,7 @@ export class Demon extends FormApplication {
 export class Hunter extends FormApplication {
     /** @override */
     static get defaultOptions() {
-        return mergeObject(super.defaultOptions, {
+        return foundry.utils.mergeObject(super.defaultOptions, {
             id: "hunter",
             classes: ["wod20rule-dialog"],
             title: game.i18n.localize("wod.settings.huntersettings"),
@@ -911,7 +920,7 @@ export class Hunter extends FormApplication {
                 // Exclude settings the user cannot change
                 if ((s.key == "hunteredgeSettings")) {
                     // Update setting data
-                    const setting = duplicate(s);
+                    const setting = foundry.utils.duplicate(s);
 
                     setting.name = game.i18n.localize(setting.name);
                     setting.hint = game.i18n.localize(setting.hint);
@@ -969,7 +978,7 @@ export class Hunter extends FormApplication {
 export class Werewolf extends FormApplication {
     /** @override */
     static get defaultOptions() {
-        return mergeObject(super.defaultOptions, {
+        return foundry.utils.mergeObject(super.defaultOptions, {
             id: "werewolf",
             classes: ["wod20rule-dialog"],
             title: game.i18n.localize("wod.settings.werewolfsettings"),
@@ -993,7 +1002,7 @@ export class Werewolf extends FormApplication {
                 // Exclude settings the user cannot change
                 if ((s.key == "wererwolfrageSettings")) {
                     // Update setting data
-                    const setting = duplicate(s);
+                    const setting = foundry.utils.duplicate(s);
 
                     setting.name = game.i18n.localize(setting.name);
                     setting.hint = game.i18n.localize(setting.hint);
@@ -1051,7 +1060,7 @@ export class Werewolf extends FormApplication {
 export class Permissions extends FormApplication {
     /** @override */
     static get defaultOptions() {
-        return mergeObject(super.defaultOptions, {
+        return foundry.utils.mergeObject(super.defaultOptions, {
             id: "permission",
             classes: ["wod20rule-dialog"],
             title: game.i18n.localize('wod.settings.permissionsettings'),
@@ -1075,7 +1084,7 @@ export class Permissions extends FormApplication {
                 // Exclude settings the user cannot change
                 if ((s.key == "changeActorImagePermission") || (s.key == "changeItemImagePermission") || (s.key == "itemAdministratorLevel") || (s.key == "observersFullActorViewPermission") || (s.key == "limitedFullActorViewPermission")) {
                     // Update setting data
-                    const setting = duplicate(s);
+                    const setting = foundry.utils.duplicate(s);
 
                     setting.name = game.i18n.localize(setting.name);
                     setting.hint = game.i18n.localize(setting.hint);
@@ -1133,7 +1142,7 @@ export class Permissions extends FormApplication {
 export class Graphics extends FormApplication {
     /** @override */
     static get defaultOptions() {
-        return mergeObject(super.defaultOptions, {
+        return foundry.utils.mergeObject(super.defaultOptions, {
             id: "graphics",
             classes: ["wod20rule-dialog"],
             title: game.i18n.localize('wod.settings.graphicsettings'),
@@ -1157,7 +1166,7 @@ export class Graphics extends FormApplication {
                 // Exclude settings the user cannot change
                 if ((s.key == "useSplatFonts") || (s.key == "useLinkPlatform")) {
                     // Update setting data
-                    const setting = duplicate(s);
+                    const setting = foundry.utils.duplicate(s);
 
                     setting.name = game.i18n.localize(setting.name);
                     setting.hint = game.i18n.localize(setting.hint);

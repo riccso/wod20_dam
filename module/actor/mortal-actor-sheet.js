@@ -14,7 +14,7 @@ export class MortalActorSheet extends ActorSheet {
 	
 	/** @override */
 	static get defaultOptions() {
-		return mergeObject(super.defaultOptions, {
+		return foundry.utils.mergeObject(super.defaultOptions, {
 			classes: ["wod20 wod-sheet mortal"],
 			template: "systems/worldofdarkness/templates/actor/mortal-sheet.html",
 			tabs: [{
@@ -47,7 +47,7 @@ export class MortalActorSheet extends ActorSheet {
 	
 	/** @override */
 	async getData() {
-		const actorData = duplicate(this.actor);		
+		const actorData = foundry.utils.duplicate(this.actor);		
 
 		if (!actorData.system.settings.iscreated) {
 			if (actorData.type == CONFIG.worldofdarkness.sheettype.mortal) {
@@ -274,7 +274,7 @@ export class MortalActorSheet extends ActorSheet {
 		const dataset = element.dataset;
 		let found = false;
 
-		const actorData = duplicate(this.actor);
+		const actorData = foundry.utils.duplicate(this.actor);
 
 		if (dataset.type == CONFIG.worldofdarkness.sheettype.vampire) {
 			found = true;
@@ -324,7 +324,7 @@ export class MortalActorSheet extends ActorSheet {
 		const dataset = element.dataset;
 		let found = false;
 
-		const actorData = duplicate(this.actor);
+		const actorData = foundry.utils.duplicate(this.actor);
 
 		if (dataset.type == CONFIG.worldofdarkness.sheettype.vampire) {
 			found = true;
@@ -382,7 +382,7 @@ export class MortalActorSheet extends ActorSheet {
 		const dataset = element.dataset;
 		let found = false;
 
-		const actorData = duplicate(this.actor);
+		const actorData = foundry.utils.duplicate(this.actor);
 
 		if (dataset.type == CONFIG.worldofdarkness.sheettype.vampire) {
 			found = true;
@@ -418,7 +418,7 @@ export class MortalActorSheet extends ActorSheet {
 		const element = event.currentTarget;
 		const dataset = element.dataset;
 
-		const actorData = duplicate(this.actor);
+		const actorData = foundry.utils.duplicate(this.actor);
 
 		if (this.actor.type == CONFIG.worldofdarkness.sheettype.changeling) {
 			await CreateHelper.SetChangingVariant(actorData, dataset.value);
@@ -455,7 +455,7 @@ export class MortalActorSheet extends ActorSheet {
 		const dataset = element.dataset;
 
 		const source = dataset.source;
-		const actorData = duplicate(this.actor);
+		const actorData = foundry.utils.duplicate(this.actor);
 
 		if (source == "attribute") {
 			let attribute = dataset.attribute;
@@ -473,7 +473,7 @@ export class MortalActorSheet extends ActorSheet {
 		else if (source == "ability") {
 			const itemid = dataset.abilityid;
 			const item = await this.actor.getEmbeddedDocument("Item", itemid);
-			const itemData = duplicate(item);
+			const itemData = foundry.utils.duplicate(item);
 			itemData.system.speciality = element.value;
 			await item.update(itemData);
 			return;
@@ -578,7 +578,7 @@ export class MortalActorSheet extends ActorSheet {
 		}
 
 		const ability = dataset.label;
-		const actorData = duplicate(this.actor);
+		const actorData = foundry.utils.duplicate(this.actor);
 		const source = dataset.source;
 		const type = dataset.switchtype;
 
@@ -589,7 +589,7 @@ export class MortalActorSheet extends ActorSheet {
 		if (source == "secondaryability") {
 			const itemid = dataset.itemid;
 			const item = await this.actor.getEmbeddedDocument("Item", itemid);
-			const itemData = duplicate(item);
+			const itemData = foundry.utils.duplicate(item);
 			itemData.system.isvisible = !item.system.isvisible;
 			await item.update(itemData);
 			this.render();
@@ -650,7 +650,7 @@ export class MortalActorSheet extends ActorSheet {
 		   	}
 
 			let item = await this.actor.getEmbeddedDocument("Item", itemid);
-			const itemData = duplicate(item);
+			const itemData = foundry.utils.duplicate(item);
 			if ((index == 0) && (itemData.system.value == 1)) {
 				itemData.system.value = 0;
 			}
@@ -666,6 +666,12 @@ export class MortalActorSheet extends ActorSheet {
 			const abilityType = parent[0].dataset.ability;				
 			const fieldStrings = parent[0].dataset.name;
 			const fields = fieldStrings.split(".");
+
+			let isSpirit = false;
+
+			if ((this.actor.type == CONFIG.worldofdarkness.sheettype.creature) && (this.actor.system.settings.variant == "spirit")) {
+				isSpirit = true;
+			}
 	
 			if (index < 0 || index > steps.length) {
 				return;
@@ -679,7 +685,7 @@ export class MortalActorSheet extends ActorSheet {
 				 ui.notifications.warn(game.i18n.localize("wod.system.sheetlocked"));
 				 return;
 			}
-			if ((fieldStrings == "advantages.willpower.permanent") && (CONFIG.worldofdarkness.attributeSettings == "5th")) {
+			if (((fieldStrings == "advantages.willpower.permanent") && (CONFIG.worldofdarkness.attributeSettings == "5th")) && (!isSpirit)) {
 				ui.notifications.error(game.i18n.localize("wod.advantages.willpowerchange"));	
 				return;
 			}			
@@ -723,7 +729,7 @@ export class MortalActorSheet extends ActorSheet {
 			return;
 		}
 		
-		const actorData = duplicate(this.actor);
+		const actorData = foundry.utils.duplicate(this.actor);
 
 		if (oldState == "") {
 			actorData.system.health.damage.bashing = parseInt(actorData.system.health.damage.bashing) + 1;
@@ -773,7 +779,7 @@ export class MortalActorSheet extends ActorSheet {
 			return;
 		}
 
-		const actorData = duplicate(this.actor);
+		const actorData = foundry.utils.duplicate(this.actor);
 
 		if (oldState == "") {
 			return
@@ -1049,7 +1055,7 @@ export class MortalActorSheet extends ActorSheet {
 				itemData = {
 					name: `${game.i18n.localize("wod.labels.new.apocalypticform")}`,
 					type: itemtype,
-					data: {
+					system: {
 						iscreated: true,
 						level: 0,
 						type: "wod.types.apocalypticform"
@@ -1172,7 +1178,7 @@ export class MortalActorSheet extends ActorSheet {
 				active = true;
 			}
 
-			await item.update({"data.isactive" : active});
+			await item.update({"system.isactive" : active});
 		}
 		if (type == "isequipped") {
 			let equipped = false;
@@ -1184,10 +1190,10 @@ export class MortalActorSheet extends ActorSheet {
 				equipped = true;
 			}
 
-			await item.update({"data.isequipped" : equipped});			
+			await item.update({"system.isequipped" : equipped});			
 		}
 
-		const actorData = duplicate(this.actor);
+		const actorData = foundry.utils.duplicate(this.actor);
 
 		await ActionHelper.handleCalculations(actorData);
 		await ActionHelper.handleWoundLevelCalculations(actorData);
@@ -1246,7 +1252,7 @@ export class MortalActorSheet extends ActorSheet {
 		
 		if (type == "bonus") {
 			let item = await this.actor.getEmbeddedDocument("Item", itemId);
-			const itemData = duplicate(item);
+			const itemData = foundry.utils.duplicate(item);
 
 			let bonus = {
 				name: game.i18n.localize("wod.labels.new.bonus"),
@@ -1286,7 +1292,7 @@ export class MortalActorSheet extends ActorSheet {
             return;
 
 		if (powertype == "power") {
-			const itemData = duplicate(item);
+			const itemData = foundry.utils.duplicate(item);
 			itemData.system.parentid = "";
 			await item.update(itemData);	
 		}
@@ -1319,7 +1325,6 @@ export class MortalActorSheet extends ActorSheet {
 		const html = await renderTemplate(template, templateData);
 	
 		const chatData = {
-			type: CONST.CHAT_MESSAGE_TYPES.ROLL,
 			content: html,
 			speaker: ChatMessage.getSpeaker({ actor: this.actor }),
 			rollMode: game.settings.get("core", "rollMode")        
@@ -1331,7 +1336,7 @@ export class MortalActorSheet extends ActorSheet {
 	async _updateSecondaryAbility(itemId, value) {
 		const item = await this.actor.getEmbeddedDocument("Item", itemId);
 
-		const itemData = duplicate(item);
+		const itemData = foundry.utils.duplicate(item);
 
 		if ((value == 1) && (itemData.system.value == 1)) {
 			itemData.system.value = 0;
@@ -1349,7 +1354,7 @@ export class MortalActorSheet extends ActorSheet {
 	async _assignToActorField(fields, value) {
 		console.log("WoD | Mortal Sheet _assignToActorField");
 		
-		const actorData = duplicate(this.actor);
+		const actorData = foundry.utils.duplicate(this.actor);
 		let area = fields[0];	
 		const ability = fields[1];	
 
@@ -1357,6 +1362,12 @@ export class MortalActorSheet extends ActorSheet {
 			const abilityType = fields[2];
 
 			if (ability === "willpower") {
+				let isSpirit = false;
+
+				if ((this.actor.type == CONFIG.worldofdarkness.sheettype.creature) && (this.actor.system.settings.variant == "spirit")) {
+					isSpirit = true;
+				}
+
 				if (abilityType === "temporary") {
 					if (actorData.system.advantages.willpower.temporary == value) {
 						actorData.system.advantages.willpower.temporary = parseInt(actorData.system.advantages.willpower.temporary) - 1;
@@ -1365,7 +1376,7 @@ export class MortalActorSheet extends ActorSheet {
 						actorData.system.advantages.willpower.temporary = parseInt(value);
 					}
 				}
-				else if (CONFIG.worldofdarkness.attributeSettings == "20th") {
+				else if ((CONFIG.worldofdarkness.attributeSettings == "20th") || (isSpirit)) {
 					if (abilityType === "permanent") {
 						if (actorData.system.advantages.willpower.permanent == value) {
 							actorData.system.advantages.willpower.permanent = parseInt(actorData.system.advantages.willpower.permanent) - 1;

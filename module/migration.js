@@ -107,7 +107,7 @@ export  const updates = async () => {
         // handle Game settings  
         let totalinit = -1;
 
-        const actorData = duplicate(actor);
+        const actorData = foundry.utils.duplicate(actor);
 
         if (actor.type != CONFIG.worldofdarkness.sheettype.spirit) {
             if (attributeSettings == "20th") {
@@ -197,7 +197,7 @@ export  const updates = async () => {
             // for (const item of actor.items) {
 
             //     let hasChanged = false;
-            //     const itemData = duplicate(item);
+            //     const itemData = foundry.utils.duplicate(item);
             //     const imgUrl = getImage(item);
 
             //     if (imgUrl != "") {                    
@@ -239,7 +239,7 @@ export  const updates = async () => {
     
     /* for (const item of game.items) {
         let hasChanged = false;
-        const itemData = duplicate(item);
+        const itemData = foundry.utils.duplicate(item);
         const imgUrl = getImage(item);
 
         if (imgUrl != "") {                    
@@ -266,15 +266,20 @@ export  const updates = async () => {
     let update = false;
     let found = false;
 
-    if (actor.system.settings.version == "") {
-        const updateData = duplicate(actor);
+    // deprecated sheet
+    if (actor.type == CONFIG.worldofdarkness.sheettype.spirit) {
+        return;
+    }
+
+    if ((actor.system.settings.version == "") || (actor.system.settings.version == undefined)) {
+        const updateData = foundry.utils.duplicate(actor);
         updateData.system.settings.version = "2.2.0";
         await actor.update(updateData);
     }
 
     if (_compareVersion(actor.system.settings.version, "1.5.0")) {
         
-        const updateData = duplicate(actor);
+        const updateData = foundry.utils.duplicate(actor);
 
         updateData.system.settings.version = "1.5.0";
 
@@ -392,7 +397,7 @@ export  const updates = async () => {
     }
 
     if (_compareVersion(actor.system.settings.version, "1.6.0")) {
-        const updateData = duplicate(actor);
+        const updateData = foundry.utils.duplicate(actor);
         
         updateData.system.settings.version = "1.6.0";
 
@@ -471,7 +476,7 @@ export  const updates = async () => {
     }
 
     if (_compareVersion(actor.system.settings.version, "2.1.0")) {
-        let updateData = duplicate(actor);
+        let updateData = foundry.utils.duplicate(actor);
 
         if (updateData.type != CONFIG.worldofdarkness.sheettype.spirit) {
             updateData.system.settings.version = "2.1.0";            
@@ -609,7 +614,7 @@ export  const updates = async () => {
     }  
 
     if (_compareVersion(actor.system.settings.version, "2.2.0")) {        
-        let updateData = duplicate(actor);
+        let updateData = foundry.utils.duplicate(actor);
 
         updateData.system.settings.version = "2.2.0";
 
@@ -836,7 +841,7 @@ export  const updates = async () => {
     }
 
     if (_compareVersion(actor.system.settings.version, "2.3.0")) {        
-        let updateData = duplicate(actor);
+        let updateData = foundry.utils.duplicate(actor);
 
         updateData.system.settings.version = "2.3.0";
         
@@ -855,7 +860,7 @@ export  const updates = async () => {
     }
 
     if (_compareVersion(actor.system.settings.version, "3.1.0")) {        
-        let updateData = duplicate(actor);
+        let updateData = foundry.utils.duplicate(actor);
         update = false;
         
         if (actor.type != CONFIG.worldofdarkness.sheettype.spirit) {
@@ -1105,7 +1110,7 @@ export  const updates = async () => {
     }
 
     if (_compareVersion(actor.system.settings.version, "3.2.0")) {        
-        let updateData = duplicate(actor);
+        let updateData = foundry.utils.duplicate(actor);
         update = false;
 
         if (actor.type == CONFIG.worldofdarkness.sheettype.mortal) {
@@ -1142,7 +1147,7 @@ export  const updates = async () => {
     }
 
     if (_compareVersion(actor.system.settings.version, "3.2.9")) {
-        let updateData = duplicate(actor);
+        let updateData = foundry.utils.duplicate(actor);
         update = false;
 
         if (actor.type == CONFIG.worldofdarkness.sheettype.demon) {
@@ -1166,7 +1171,7 @@ export  const updates = async () => {
         }
 
         if (update) {
-            let updateData = duplicate(actor);
+            let updateData = foundry.utils.duplicate(actor);
             updateData.system.settings.version = "3.3.0";
 
             await actor.update(updateData);
@@ -1184,7 +1189,7 @@ export  const updates = async () => {
     let altered = false;
 
     if (_compareVersion(item.system.version, "1.5.0")) {
-        const itemData = duplicate(item);
+        const itemData = foundry.utils.duplicate(item);
 
         if (item.type == "Armor") {
             itemData.system.forms.hashomid = itemData.system.forms.homid;
@@ -1343,7 +1348,7 @@ export  const updates = async () => {
     }
 
     if (_compareVersion(item.system.version, "2.1.0")) {
-        const itemData = duplicate(item);
+        const itemData = foundry.utils.duplicate(item);
         itemData.system.version = "2.1.0";
 
         if (item.type == "Melee Weapon") {
@@ -1381,7 +1386,7 @@ export  const updates = async () => {
     }
 
     if (_compareVersion(item.system.version, "2.2.0")) {
-        const itemData = duplicate(item);
+        const itemData = foundry.utils.duplicate(item);
         itemData.system.version = "2.2.0";
 
         if (item.type == "Power") {
@@ -1403,7 +1408,7 @@ export  const updates = async () => {
     }
 
     if (_compareVersion(item.system.version, "2.3.0")) {
-        const itemData = duplicate(item);        
+        const itemData = foundry.utils.duplicate(item);        
 
         if (item.type == "Power") {
             if ((item.system.type == "wod.types.art") || (item.system.type == "wod.types.artpower")) {
@@ -1439,7 +1444,7 @@ export  const updates = async () => {
     }
 
     if (_compareVersion(item.system.version, "3.1.0")) {
-        const itemData = duplicate(item);        
+        const itemData = foundry.utils.duplicate(item);        
 
         if (item.type == "Power") {
             if (item.system.type == "wod.types.artpower") {
@@ -1464,7 +1469,7 @@ export  const updates = async () => {
     }
 
     if (_compareVersion(item.system.version, "3.2.0")) {
-        const itemData = duplicate(item);
+        const itemData = foundry.utils.duplicate(item);
 
         if (item.type == "Power") {
             if (item.system.type == "wod.types.artpower") {
@@ -1485,13 +1490,13 @@ export  const updates = async () => {
     }
 
     if (_compareVersion(item.system.version, "3.3.0")) {
-        let itemData = duplicate(item);
+        let itemData = foundry.utils.duplicate(item);
 
         if ((item.type == "Bonus") && ((item.system.parentid != "") && (item.system.parentid != "hispo") && (item.system.parentid != "lupus") && item.actor != null)) {
             console.log(`Bonus found on ${item.actor.name} type ${item.system.type}`);
 
             let bonus = item.actor.getEmbeddedDocument("Item", item.system.parentid);
-            itemData = duplicate(bonus);
+            itemData = foundry.utils.duplicate(bonus);
 
             let bonusData = {
                 name: item.name,
@@ -1596,6 +1601,7 @@ export  const updates = async () => {
     let patch310 = false;
     let patch320 = false;
     let patch330 = false;
+    let patch400 = false;
 
     let newfunctions = "";
 
@@ -1614,6 +1620,7 @@ export  const updates = async () => {
         patch310 = game.settings.get('worldofdarkness', 'patch310');
         patch320 = game.settings.get('worldofdarkness', 'patch320');
         patch330 = game.settings.get('worldofdarkness', 'patch330');
+        patch400 = game.settings.get('worldofdarkness', 'patch400');
     } 
     catch (e) {
     }
@@ -1778,19 +1785,51 @@ export  const updates = async () => {
     if (!patch330) {
         game.settings.set('worldofdarkness', 'patch330', true);
 
-        newfunctions += "<li>Dark mode setting</li>";
+        /*newfunctions += "<li>Dark mode setting</li>";
         newfunctions += '<li>Added support for <a href="https://foundryvtt.com/packages/drag-ruler/">Drag Rules module</a></li>';
         newfunctions += "<li>Bonus system is reworked to support adding bonus to items not connected to Actor</li>";
         newfunctions += "<li>[MtA] Added creature variants Familiar and Construct</li>";
         newfunctions += "<li>[VtM] Combination disciplines</li>";
         newfunctions += "<li>[WtA] Added lost breeds Apis, Camazotz and Grondr</li>";
-        newfunctions += "<li>Fixed a bunish of bugs and other minor issues</li>";
+        newfunctions += "<li>Fixed a bunish of bugs and other minor issues</li>";*/
+    }
+
+    if (!patch400) {
+        game.settings.set('worldofdarkness', 'patch400', true);
+
+        newfunctions += "<li>Foundry version 12</li>";
+        newfunctions += '<li>Added Ukrainian support</li>';        
     }
 
     // Support Drag Ruler module (notify stabchenfisch about it)
 
     if (newfunctions == "") {
         newfunctions += 'Issues fixed in version:<br />';
+
+        if (_compareVersion(installedVersion, '4.0.2')) {
+            newfunctions += '<li>Fixed problems to send message to chat.</li>';
+        }
+
+        if (_compareVersion(installedVersion, '4.0.1')) {
+            newfunctions += '<li>New Werewolves, Demons or Changelings was created in a wrong way which is now fixed. <a href="https://github.com/JohanFalt/Foundry_WoD20/issues/859">[#859], <a href="https://github.com/JohanFalt/Foundry_WoD20/issues/860">[#860], <a href="https://github.com/JohanFalt/Foundry_WoD20/issues/861">[#861]</li>';
+            newfunctions += '<li>Setting an item to Active or Equipped now works. <a href="https://github.com/JohanFalt/Foundry_WoD20/issues/858">[#858]</a></li>';
+        }
+
+        /*if (_compareVersion(installedVersion, '3.3.5')) {
+            newfunctions += '<li>Update German translation. <a href="https://github.com/JohanFalt/Foundry_WoD20/issues/830">[#830]</li>';
+            newfunctions += '<li>Old spirit sheet causing problem. <a href="https://github.com/JohanFalt/Foundry_WoD20/issues/842">[#842]</a></li>';
+        }
+
+        if (_compareVersion(installedVersion, '3.3.4')) {
+            newfunctions += '<li>Fixed bug where you could not press the dice roll buttons on Roll General Dices. <a href="https://github.com/JohanFalt/Foundry_WoD20/issues/839">[#839]</a></li>';
+            newfunctions += '<li>Fixed bug that caused Spirit Willpower not to work properly if you used the 5th ed rule setting. <a href="https://github.com/JohanFalt/Foundry_WoD20/issues/840">[#840]</a></li>';
+        }
+
+        if (_compareVersion(installedVersion, '3.3.3')) {
+            newfunctions += '<li>Fixed language problems.</li>';
+            newfunctions += '<li>Fixed Dark Mode in chat window</li>';
+            newfunctions += '<li>Spanish translation update</li>';            
+        }
 
         if (_compareVersion(installedVersion, '3.3.2')) {
             newfunctions += '<li>[WtA] Fixed problem for shifters could not roll gifts.</li>';
@@ -1804,7 +1843,7 @@ export  const updates = async () => {
             newfunctions += '<li>[VtM] Fixed so totals of experience points was displayed.</li>';
             newfunctions += '<li>[WtA] Fixed so you can select any of the lost breeds at sheet creation.</li>';
             newfunctions += '<li>Fixed localizatation problems.</li>';
-        }
+        }*/
 
         /* if (_compareVersion(installedVersion, '3.2.14')) {
             newfunctions += '<li>Updated German translation.</li>';
@@ -1871,7 +1910,7 @@ export  const updates = async () => {
 
     const headline = "Version "+migrationVersion+" installed";
 
-    let message = 'New version of the system has been installed. Details can be read at <a href="https://github.com/JohanFalt/Foundry_WoD20/wiki/Changelog#fix-in-330">Changelog</a>.<br /><br />';
+    let message = 'New version of the system has been installed. Details can be read at <a href="https://github.com/JohanFalt/Foundry_WoD20/wiki/Changelog#fix-in-400">Changelog</a>.<br /><br />';
     message += 'If you find any problems, are missing things or just would like a feature that the System is lacking, please report these <a href="https://github.com/JohanFalt/Foundry_WoD20/issues">HERE</a><br /><br />';
     message += 'If you wish to read about the system you can do so <a href="https://github.com/JohanFalt/Foundry_WoD20/wiki">HERE</a><br /><br />';
 
